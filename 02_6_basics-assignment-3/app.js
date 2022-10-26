@@ -15,7 +15,7 @@ const app = Vue.createApp({
         result(){
             if(this.counter > this.target) return "Too much!"
             else if(this.counter < this.target) return "Not there yet."
-            else return "You did find the number = "+this.target
+            else return "Number is = "+this.target
         }
     },
     watch:{
