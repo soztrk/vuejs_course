@@ -3,11 +3,20 @@
     <h1>Friend List</h1>
   </header>
   <section id="app">
-    <ul v-for="friend in friends" :key="friend.id">
+    <NewFriend 
+    @add-friend="addFriend"
+    />
+    <ul>
       <FriendContact 
+        v-for="friend in friends" 
+        :id="friend.id"
+        :key="friend.id"
         :name="friend.name"
         :phone="friend.phone"
         :email="friend.email"
+        :is-favorite="friend.favorite"
+        @toggle-favorite="toggleFavorite"
+        @remove-contact="removeContact"
       />
     </ul>
   </section>
@@ -15,6 +24,7 @@
 
 <script>
 import FriendContact from './components/FriendContact.vue'
+import NewFriend from './components/NewFriend.vue'
 
 export default {
   name: 'App',
@@ -24,20 +34,38 @@ export default {
                 {
                     id:"manu",
                     name:"Manuel Lorenzo",
-                    phone:556565,
-                    email:"manu@el.com"
+                    phone:5555546,
+                    email:"manu@el.com",
+                    favorite:false
                 },
                 {
                     id:"jul",
                     name:"Juli Jones",
                     phone:154588,
-                    email:"juli@li.com"
+                    email:"juli@li.com",
+                    favorite:true
                 }
             ]
         }
     },
+  methods:{
+    toggleFavorite(id){
+      let found = this.friends.find(friend=>id===friend.id)
+      found.favorite = !found.favorite
+    },
+    addFriend(data){
+      const formData = data()
+      if(formData){
+        this.friends.push(formData)
+      }
+    },
+    removeContact(id){
+      this.friends = [...this.friends.filter(friend=>friend.id!==id)]
+    }
+  },
   components: {
-    FriendContact
+    FriendContact,
+    NewFriend
   }
 }
 </script>
