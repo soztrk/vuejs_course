@@ -8,14 +8,33 @@
           <li>
             <router-link :to="{name:'coachesList'}">All Coaches</router-link>
           </li>
-          <li>
+          <li v-if="isLoggedIn">
             <router-link :to="{name:'requestsList'}">Requests</router-link>
+          </li>
+          <li v-else>
+            <router-link :to="{name:'userAuth'}">Login</router-link>
+          </li>
+          <li v-if="isLoggedIn">
+            <Button @click="logout">Logout</Button>
           </li>
         </ul>
       </nav>
     </header>
 </template>
 <script>
+export default{
+  computed:{
+    isLoggedIn(){
+      return this.$store.getters["auth/isAuth"]
+    }
+  },
+  methods:{
+    logout(){
+      this.$store.dispatch('auth/logout')
+      this.$router.replace("/")
+    }
+  }
+}
 </script>
 <style scoped>
 header {

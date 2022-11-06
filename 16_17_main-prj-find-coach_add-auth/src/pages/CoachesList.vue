@@ -7,7 +7,8 @@
           <Card>
               <div class="controls">
                   <Button @click="loadCoaches(true)" mode="outline">Refresh</Button>
-                  <Button v-if="!isCoach && !isLoading" link to="/register">Register as Coacth</Button>
+                  <Button link to="/auth?redirect=register" v-if="!isLoggedIn">Login to Register as Coach</Button>
+                  <Button v-if="isLoggedIn && !isCoach && !isLoading" link to="/register">Register as Coacth</Button>
               </div>
               <div v-if="isLoading">
                 <Spinner />
@@ -84,6 +85,9 @@ export default{
       },
       hasCoaches(){
         return !this.isLoading && this.filteredCoaches.length > 0
+      },
+      isLoggedIn(){
+        return this.$store.getters["auth/isAuth"]
       }
     },
     created(){

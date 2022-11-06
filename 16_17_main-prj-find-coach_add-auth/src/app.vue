@@ -11,6 +11,19 @@ import TheHeader from "./components/TheHeader"
 export default{
     components:{
         TheHeader
+    },
+    computed:{
+      didAutoLogout(){
+        return this.$store.getters["auth/didAutoLogout"]
+      }
+    },
+    watch:{
+      didAutoLogout(currentVal,oldVal){
+        if(currentVal && currentVal !== oldVal) this.$router.replace("/")
+      }
+    },
+    created(){
+      this.$store.dispatch("auth/autoLogin")
     }
 }
 </script>

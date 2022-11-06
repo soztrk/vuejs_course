@@ -5,7 +5,6 @@
                 <h2>Requests Received</h2>
             </header>
             <Spinner v-if="isLoading" />
-            <div class="error-box" v-else-if="!isLoading && error">{{error}}</div>
             <ul v-else-if="!isLoading && hasRequests">
                 <RequestItem 
                 v-for="request in recivedRequests"
@@ -14,8 +13,11 @@
                 :message="request.message"
                 />
             </ul>
-            <h3 v-else>You haven't received any requests yet!</h3>
+            <h3 v-else-if="error === null">You haven't received any requests yet!</h3>
         </Card>
+        <Dialog :show="!!error" title="An error occurred!" @close="handleError">
+            <p>{{error}}</p>
+        </Dialog>
     </section>
 </template>
 
@@ -51,6 +53,9 @@ export default{
                 this.error = error.message
             }
             this.isLoading = false
+        },
+        handleError(){
+            this.error = false
         }
     },
     created(){
@@ -73,11 +78,5 @@ ul {
 
 h3 {
   text-align: center;
-}
-.error-box{
-    padding:10px;
-    border:1px solid salmon;
-    border-radius: 8px;
-    color:red;
 }
 </style>

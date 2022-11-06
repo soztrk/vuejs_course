@@ -7,7 +7,7 @@ const requestsModule = {
     },
     getters:{
         requestsList(state,getters,rootState,rootGetters){
-            const coachId = rootGetters.userId
+            const coachId = rootGetters["auth/userId"]
             return state.requests.filter(req=>req.coachId===coachId)
         },
         hasRequests(state){
@@ -59,12 +59,14 @@ const requestsModule = {
             context.commit("addRequest",payload)
         },
         async fetchRequests(context){
-            const coachId = context.rootGetters.userId
-            const response  = await fetch(`https://vue-coursee-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json`)
+            const coachId = context.rootGetters["auth/userId"]
+            const token = context.rootGetters["auth/token"]
+
+            const response  = await fetch(`https://vue-coursee-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json?auth=${token}`)
             const responseData = await response.json()
 
             if(!response.ok) {
-                const error = new Error(responseData.message)
+                const error = new Error(responseData.error)
                 throw error
             }
 
