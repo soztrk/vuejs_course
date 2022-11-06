@@ -1,5 +1,5 @@
 <template>
-  <teleport to="body">
+  <Teleport to="body">
     <div v-if="show" @click="tryClose" class="backdrop"></div>
     <Transition name="dialog">
       <dialog open v-if="show">
@@ -18,12 +18,10 @@
         </menu>
       </dialog>
     </Transition>
-  </teleport>
+  </Teleport>
 </template>
 
 <script>
-
-
 export default {
     props: {
         show: {
@@ -101,7 +99,7 @@ menu {
   margin: 0;
 }
 
-.dialog-enter-acitve, .dialog-leave-acitve{
+.dialog-enter-active, .dialog-leave-active{
   transition:all 0.3s ease;
 }
 

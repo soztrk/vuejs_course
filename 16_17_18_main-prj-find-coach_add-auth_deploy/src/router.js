@@ -5,12 +5,20 @@ import store from "./store"
 
 //pages
 import CoachesList from "./pages/CoachesList"
-import CoachDetail from "./pages/CoachDetail"
+import NotFound from "./pages/NotFound"
+
+/* import CoachDetail from "./pages/CoachDetail"
 import CoachContactForm from "./pages/CoachContactForm"
 import CoachRegister from "./pages/CoachRegister"
 import RequestsList from "./pages/RequestsList"
-import NotFound from "./pages/NotFound"
-import UserAuth from "./pages/UserAuth"
+import UserAuth from "./pages/UserAuth" */
+
+/* Async Components no need to defineAsyncComponent in routing */
+const CoachDetail = ()=>import("./pages/CoachDetail")
+const CoachContactForm = ()=>import("./pages/CoachContactForm")
+const CoachRegister = ()=>import("./pages/CoachRegister")
+const RequestsList = ()=>import("./pages/RequestsList")
+const UserAuth = ()=>import("./pages/UserAuth")
 
 const router = createRouter({
     history:createWebHistory(),
